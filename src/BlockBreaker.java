@@ -77,8 +77,24 @@ public class BlockBreaker extends JPanel implements KeyListener{
 			//if (ba.y > paddle.y)
 				//ba.destroyed= true;
 			//if(ba.y < 0 || ba.y > (getHeight() - ballSize) || ba.intersects(paddle))
-			if(ba.y < 0 ||  ba.intersects(paddle))
+			if(ba.y < 0 ||  ba.intersects(paddle)) {
+				double mult = ba.dy/Math.abs(ba.dy);
+				ba.dy = getRandom(2.5, 3.5) * mult;
 				ba.dy *= -1;
+				double ballCenter = ba.getX() + ba.getWidth()/2;
+				double paddleCenter = paddle.getX() + paddle.getWidth()/2;
+				if((ballCenter < paddleCenter && ba.dx > 0) || 
+					 (ballCenter > paddleCenter && ba.dx <0))
+						ba.dx *= -1;
+			/*	double ballCenter = ba.getX() + ba.getWidth()/2;
+				double paddleCenter = paddle.getX() + paddle.getWidth()/2;
+				double posx = (ballCenter - paddleCenter)/(paddle.getWidth()/2);
+				final double influenceX = 0.75;
+				double speedXY = Math.sqrt(ba.x*ba.x + ba.y*ba.y);
+				ba.dx *= posx ;*/
+					
+				
+			}
 			ba.y += ba.dy;
 			
 			for(Block b: blocks) {
@@ -134,7 +150,16 @@ public class BlockBreaker extends JPanel implements KeyListener{
 		*/
 		repaint();
 	}
-
+	
+	public double getRandom(double min, double max) {
+	
+		double random = Math.random();
+		double range = max - min;
+		double adjustment = range * random;
+		double result = min + adjustment;
+		
+		return result;
+	}
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub

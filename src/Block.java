@@ -6,8 +6,8 @@ import java.awt.Toolkit;
 
 public class Block extends Rectangle {
 	Image pic;
-	int dx=3;
-	int dy=3;
+	double dx=3;
+	double dy=3;
 	Boolean destroyed = false;
 	
 	Rectangle left;
